@@ -9,4 +9,5 @@ import java.util.Optional;
 @Repository
 public interface WeatherRepository extends JpaRepository<Weather, Long> {
     Optional<Weather> findByCity(String city);
+    void deleteByCity(String city);
 }

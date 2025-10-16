@@ -2,9 +2,11 @@ package project.cache.domain.service;
 
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.cache.annotation.CacheEvict;
 import org.springframework.cache.annotation.CachePut;
 import org.springframework.cache.annotation.Cacheable;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 import project.cache.domain.entity.Weather;
 import project.cache.domain.repository.WeatherRepository;
 
@@ -41,5 +43,11 @@ public class WeatherService {
         });
 
         return updateWeather;
+    }
+
+    @Transactional
+    @CacheEvict(value = "weather", key = "#city")
+    public void deleteWeather(String city) {
+        weatherRepository.deleteByCity(city);
     }
 }
