@@ -18,7 +18,7 @@ public class WeatherService {
 
     private final WeatherRepository weatherRepository;
 
-    @Cacheable("weather")
+    @Cacheable(value = "weather", key = "#city")
     public String getWeather(String city) {
         log.info("Fetching data from DB for city: {}", city);
         Optional<Weather> weather = weatherRepository.findByCity(city);
@@ -33,13 +33,13 @@ public class WeatherService {
         return weatherRepository.findAll();
     }
 
-    @CachePut("weather")
-    public String updateWeather(String city, String weatherUpdate) {
+    @CachePut(value = "weather", key = "#city")
+    public String updateWeather(String city, String updateWeather) {
         weatherRepository.findByCity(city).ifPresent(weather -> {
-            weather.setForecast(weatherUpdate);
+            weather.setForecast(updateWeather);
             weatherRepository.save(weather);
         });
 
-        return weatherUpdate;
+        return updateWeather;
     }
 }
