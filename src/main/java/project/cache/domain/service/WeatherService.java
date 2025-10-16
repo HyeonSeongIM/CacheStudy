@@ -2,6 +2,7 @@ package project.cache.domain.service;
 
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.cache.annotation.CachePut;
 import org.springframework.cache.annotation.Cacheable;
 import org.springframework.stereotype.Service;
 import project.cache.domain.entity.Weather;
@@ -32,6 +33,7 @@ public class WeatherService {
         return weatherRepository.findAll();
     }
 
+    @CachePut("weather")
     public String updateWeather(String city, String weatherUpdate) {
         weatherRepository.findByCity(city).ifPresent(weather -> {
             weather.setForecast(weatherUpdate);
