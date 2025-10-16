@@ -35,4 +35,9 @@ public class WeatherController {
     public void getCacheData() {
         cacheInspectionService.printCacheContents("weather");
     }
+
+    @PutMapping("/{city}")
+    public String updateWeather(@PathVariable String city, @RequestBody String weatherUpdate) {
+        return weatherService.updateWeather(city, weatherUpdate);
+    }
 }

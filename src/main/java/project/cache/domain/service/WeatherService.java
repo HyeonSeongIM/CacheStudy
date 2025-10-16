@@ -31,4 +31,13 @@ public class WeatherService {
     public List<Weather> getAllWeather() {
         return weatherRepository.findAll();
     }
+
+    public String updateWeather(String city, String weatherUpdate) {
+        weatherRepository.findByCity(city).ifPresent(weather -> {
+            weather.setForecast(weatherUpdate);
+            weatherRepository.save(weather);
+        });
+
+        return weatherUpdate;
+    }
 }
