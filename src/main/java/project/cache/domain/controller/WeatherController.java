@@ -3,6 +3,7 @@ package project.cache.domain.controller;
 import lombok.RequiredArgsConstructor;
 import org.springframework.web.bind.annotation.*;
 import project.cache.domain.entity.Weather;
+import project.cache.domain.service.CacheInspectionService;
 import project.cache.domain.service.WeatherService;
 
 import java.util.List;
@@ -13,6 +14,7 @@ import java.util.List;
 public class WeatherController {
 
     private final WeatherService weatherService;
+    private final CacheInspectionService cacheInspectionService;
 
     @GetMapping
     public String gerWeather(@RequestParam String city) {
@@ -27,5 +29,10 @@ public class WeatherController {
     @GetMapping("/all")
     public List<Weather> getAllWeather() {
         return weatherService.getAllWeather();
+    }
+
+    @GetMapping("/cacheData")
+    public void getCacheData() {
+        cacheInspectionService.printCacheContents("weather");
     }
 }

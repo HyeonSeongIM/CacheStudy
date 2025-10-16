@@ -2,6 +2,7 @@ package project.cache.domain.service;
 
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.cache.annotation.Cacheable;
 import org.springframework.stereotype.Service;
 import project.cache.domain.entity.Weather;
 import project.cache.domain.repository.WeatherRepository;
@@ -16,6 +17,7 @@ public class WeatherService {
 
     private final WeatherRepository weatherRepository;
 
+    @Cacheable("weather")
     public String getWeather(String city) {
         log.info("Fetching data from DB for city: {}", city);
         Optional<Weather> weather = weatherRepository.findByCity(city);
